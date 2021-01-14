@@ -34,25 +34,28 @@ gallery.addEventListener('click', onClickHandler);
 button.addEventListener('click', onCloseHandler);
 overlay.addEventListener('click', onCloseHandler);
 
-
 function onClickHandler(e) {
     e.preventDefault();
+    if (e.target.nodeName !== "IMG") {
+        return;
+    };
     lightbox.classList.add('is-open');
     imgLightbox.src = e.target.dataset.source;
     imgLightbox.alt = e.target.alt;
-    imgLightbox.dataset.index = e.target.dataset.index;
+    window.addEventListener('keydown', onESCpress);
 };
 function onCloseHandler() {
     lightbox.classList.remove('is-open');
     imgLightbox.src = "";
     imgLightbox.alt = "";
+    window.removeEventListener('keydown', onESCpress);
 };
 
-  
-window.addEventListener("keydown", (e) => {
+
+
+function onESCpress(e) {
     if (e.key === "Escape") {
-        onCloseHandler()
+        onCloseHandler();
     }
-    //imgLightbox.src = images[currentCarde].original;
-  
-});
+
+};
